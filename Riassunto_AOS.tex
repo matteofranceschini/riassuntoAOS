@@ -105,25 +105,25 @@
 \item \textbf{git push -u $<repository\ name>$ $[branch\ name]$}, uploads the changes to the remote repository.
 \end{itemize}
 
-\section{Merge with Master}
-\begin{itemize}
-	\item \textbf{git merge $<branch\ name>$}, merges the specified branch with the master
-\end{itemize}
-
 \section{General use}
 \begin{itemize}
 	\item \textbf{git status}, gives information about the changes in the local folder.
 	\item \textbf{git log}, gives information about all the commits of the repository, with each comment.
 \end{itemize}
 
-\section{branch}
-\subsection{create a new branch}
+\section{Branch}
+\subsection{Create a new Branch}
 \begin{itemize}
 \item \textbf{git checkout -b $<new\ branch\ name>$}
 \item \textbf{git stauts}
 \item \textbf{git add $<file\ to\ commit>$}
 \item \textbf{git commit -m "comment"}
 \item \textbf{git push -u $<repo\ name>$ $<new\ branch\ name>$}
+\end{itemize}
+\subsection{Merge Branch with master}
+\begin{itemize}
+	\item \textbf{git checkout master}, move to the master branch (or whatever branch you want to merge with).
+	\item \textbf{git merge $<branch\ name>$}, merges the specified branch with the actual branch.
 \end{itemize}
 
 
