@@ -1,0 +1,103 @@
+%% Do not edit unless you really know what you are doing.
+\documentclass[twoside,english]{report}
+\usepackage[sc]{mathpazo}
+\usepackage[scaled=0.9]{helvet}
+\renewcommand{\ttdefault}{lmtt}
+\usepackage[T1]{fontenc}
+\usepackage[latin9]{inputenc}
+\usepackage[a4paper]{geometry}
+\geometry{verbose,lmargin=2cm,rmargin=2cm}
+\usepackage{fancyhdr}
+\pagestyle{fancy}
+\setcounter{secnumdepth}{3}
+\setcounter{tocdepth}{3}
+\setlength{\parskip}{\smallskipamount}
+\setlength{\parindent}{0pt}
+\usepackage{babel}
+\usepackage{nomencl}
+% the following is useful when we have the old nomencl.sty package
+\providecommand{\printnomenclature}{\printglossary}
+\providecommand{\makenomenclature}{\makeglossary}
+\makenomenclature
+\usepackage[unicode=true,
+ bookmarks=true,bookmarksnumbered=false,bookmarksopen=false,
+ breaklinks=false,pdfborder={0 0 1},backref=false,colorlinks=false]
+ {hyperref}
+\usepackage{breakurl}
+
+%%COMMENTARE PRIMA DI PUBBLICARE 
+%----------------------------------------------------------------
+\usepackage{draftwatermark} %per il watermark sullo sfondo
+%----------------------------------------------------------------
+% Per mettere dei commenti per revisione si possono usare i comandi:
+% \unsure per le parti in cui non si è sicuri
+% \change per le parti che devono essere cambiate in fase di revisone
+% \improvement per le parti che devono essere descritte meglio
+% \info per scrivere un commento informativo
+% \thiswillnotshow è un commento che viene visto solo nel punto in cui viene piazzato e non nella lista delle note
+%----------------------------------------------------------------
+
+\makeatletter
+
+
+\input{Settings.tex}
+
+\makeatother
+
+\begin{document}
+\input{Titlepage.tex}
+
+\input{Titleback.tex}
+
+\pagenumbering{roman}
+
+\begin{multicols}{2}
+
+\printnomenclature{}
+
+\end{multicols}
+
+\tableofcontents{}
+
+\listoffigures
+
+
+\listoftables
+
+%%COMMENTARE PRIMA DI PUBBLICARE 
+%----------------------------------------------------------------
+\listoftodos[Notes] %per avere l'elenco delle note
+%----------------------------------------------------------------
+
+\clearpage{}
+
+\pagenumbering{arabic}
+
+\setcounter{page}{1}
+
+\global\long\def\diff{\text{d}}
+
+
+
+\chapter{Cazzibuffi}
+\section{W i Report}
+
+%inserire un'immagine
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[scale=1]{gfx/nome_dell_immagine}
+%	
+%	\caption{descrizione sotto la figura}
+%	\label{Fig:etichetta_immagine}
+%\end{figure}
+
+%inserire un PDF nel pdf
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[scale=1]{doc/nome_del_documento}
+%	
+%	\caption{descrizione, se necessaria}
+%	\label{Fig:etichetta_documento}
+%\end{figure}
+
+\end{document}
