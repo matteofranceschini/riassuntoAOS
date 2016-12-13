@@ -82,56 +82,54 @@
 \chapter{GitHub}
 \section{initialize repository}
 \begin{itemize}
-\item  create a new folder with files 
-\item git init
-\item git add $<files>$, with "." add every file in the folder, "*.tex" just the \LaTeX   files.
-\item git commit -m $<comment>$
-\item create a new repo on github website
-\item git remote add $<repo name>$ $<repo url>$
-\item git push -u $<repo name>$  $<branch name>$
+\item \textbf{git init}, create a new folder with files 
+\item \textbf{git add $<files>$}, with "." add every file in the folder, "*.tex" just the \LaTeX   files.
+\item \textbf{git commit .}, commits every file in the folder.
+\item \textbf{git remote add $<repo name>$ $<repo url>$},create a new repo on github website
+\item \textbf{git push -u $<repo name>$  $<branch name>$}
 \end {itemize}
 
 
 \section{work on repository}
 \begin{itemize}
-\item git add $<file to add to staging area>$
-\item git commit -m "comment" 
-\item git push -u $<repo name>$ $<branch name>$
+\item \textbf{git add} $<file to add to staging area>$
+\item \textbf{git commit -m "comment" }, commits locally the changes, adding an inline comment.
+\item \textbf{git push -u$<repo name>$ $<branch name>$}, the "-u" is needed only if you want to commit from a specific user.
 \end{itemize}
 
 \section{remote repository management}
 \begin{itemize}
-\item git clone $<repository\ url>$ downloads the full remote repository to the local computer, but has to be done on an empty folder.
-\item git fetch $<repository\ name>$, downloads the full remote repository to the local computer, overwriting the local files.
-\item git pull $<repository\ name>$ $[branch\ name]$, downloads the changes from the remote repository.
-\item git push -u $<repository\ name>$ $[branch\ name]$, uploads the changes to the remote repository.
+\item \textbf{git clone $<repository\ url>$} downloads the full remote repository to the local computer, but has to be done on an empty folder.
+\item \textbf{git fetch $<repository\ name>$}, downloads the full remote repository to the local computer, overwriting the local files.
+\item \textbf{git pull $<repository\ name>$ $[branch\ name]$}, downloads the changes from the remote repository.
+\item \textbf{git push -u $<repository\ name>$ $[branch\ name]$}, uploads the changes to the remote repository.
 \end{itemize}
 
 \section{Merge with Master}
 \begin{itemize}
-	\item git merge $<branch\ name>$, merges the specified branch with the master
+	\item \textbf{git merge $<branch\ name>$}, merges the specified branch with the master
 \end{itemize}
 
 \section{General use}
 \begin{itemize}
-	\item git status, gives information about the changes in the local folder.
-	\item git log, gives information about all the commits of the repository, with each comment.
+	\item \textbf{git status}, gives information about the changes in the local folder.
+	\item \textbf{git log}, gives information about all the commits of the repository, with each comment.
 \end{itemize}
 
 \section{branch}
 \subsection{create a new branch}
 \begin{itemize}
-\item git checkout -b $<new\ branch\ name>$
-\item git stauts
-\item git add $<file\ to\ commit>$
-\item git commit -m "comment"
-\item git push -u $<repo\ name>$ $<new\ branch\ name>$
+\item \textbf{git checkout -b $<new\ branch\ name>$}
+\item \textbf{git stauts}
+\item \textbf{git add $<file\ to\ commit>$}
+\item \textbf{git commit -m "comment"}
+\item \textbf{git push -u $<repo\ name>$ $<new\ branch\ name>$}
 \end{itemize}
 
 
 \subsection{switch to an other branch}
 \begin{itemize}
-\item git checkout $<branch\ name>$
+\item \textbf{git checkout $<branch\ name>$}
 \end{itemize}
 
 
