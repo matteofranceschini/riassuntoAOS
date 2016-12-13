@@ -92,11 +92,6 @@
 \end {itemize}
 
 
-\section{get repo on local computer}
-\begin{itemize}
-\item git clone $<repo url>$
-\end{itemize}
-
 \section{work on repository}
 \begin{itemize}
 \item git add $<file to add to staging area>$
@@ -106,12 +101,17 @@
 
 \section{remote repository management}
 \begin{itemize}
-\item git clone $<repository\ url>$
-\item git fetch $<repository\ name>$
-\item git pull $<repository\ name>$ $[branch\ name]$
-\item git push -u $<repository\ name>$ $[branch\ name]$
+\item git clone $<repository\ url>$ downloads the full remote repository to the local computer, but has to be done on an empty folder.
+\item git fetch $<repository\ name>$, downloads the full remote repository to the local computer, overwriting the local files.
+\item git pull $<repository\ name>$ $[branch\ name]$, downloads the changes from the remote repository.
+\item git push -u $<repository\ name>$ $[branch\ name]$, uploads the changes to the remote repository.
 \end{itemize}
 
+\section{General use}
+\begin{itemize}
+	\item git status, gives information about the changes in the local folder.
+	\item git log, gives information about all the commits of the repository, with each comment.
+\end{itemize}
 
 \begin{figure}[h]
 	\centering
