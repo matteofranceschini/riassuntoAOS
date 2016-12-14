@@ -90,8 +90,8 @@
 \chapter{Git}
 \section{Initialize repository}
 \begin{itemize}
-\item \code{git init . }, initialize a new repository in the current folder 
-\item \code{git clone $<repository\ url>$} downloads a full remote repository to the local computer, but has to be done on an empty folder.
+\item \code{git init .}, initialize a new repository in the current folder 
+\item \code{git clone <repository url>} downloads a full remote repository to the local computer, but has to be done on an empty folder.
 \end{itemize}
 
 \section{Work with GIT}
@@ -107,8 +107,8 @@
 \begin{itemize}
 \item \code{git fetch <repository name>}, update just the ``header'' of the repo, which contains the list of branches and so on.
 \item \code{git remote add <repo name> <repo url>}, specify a remote repo url that will be used with \code{git push} or \code{git pull} commands. 
-\item \code{git push -u <repo name> <branch name>} upload the changes to \code{repo\_name} in the branch \textt{branch\_name}. \code{-u} means that (in future) typing \code{git push} will always use this host and branch.
-\item \code{git pull <repo name> <branch name>} download the changes from the branch \textt{branch\_name} on \code{repo\_name}. If the remote repo is stored as default (or it's the only one), \code{git pull} will work as well.
+\item \code{git push -u <repo name> <branch name>} upload the changes to \code{repo_name} in the branch \code{branch_name}. \code{-u} means that (in future) typing \code{git push} will always use this host and branch.
+\item \code{git pull <repo name> <branch name>} download the changes from the branch \code{branch_name} on \code{repo_name}. If the remote repo is stored as default (or it's the only one), \code{git pull} will work as well.
 \end {itemize}
 
 \section{Branch}
