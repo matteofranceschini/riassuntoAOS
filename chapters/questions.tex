@@ -18,6 +18,3 @@ When you add an OS, an interrupt can wake up a higher priority task than the cur
 
 
 Since each task has its set of registers, upon entering the ISR all registers have to be stored in a per­task data structure within the OS, called a task control block. This is because the registers that will be restored at the end of the ISR will be those of the next task, which may or may not be the one that was interrupted. Not saving all of them (or not restoring all of them) does not work when the before and after task differ. This saving is done by code in the OS, not by the compiler.
-
-\section{title}
-\section{title}
