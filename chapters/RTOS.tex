@@ -1,1 +1,36 @@
+\section{Types}
+There are two types of RTOS:
+\begin{itemize}
+	\item \textbf{Hard real-time}: timing violation is not accettable (car, ecc..)
+	\item \textbf{Soft real-time}: timing violation is undesiderable but accettable (video, music, ecc..)
+\end{itemize}
+
 \section{Features}
+The main features of an RTOS are:
+\begin{itemize}
+	\item \textbf{Determinism}: operation are performed at fixed and predetermined times \textbf{or} within predetermined time intervals. It defines how much time it takes to react, but \textbf{not} to complete the operation (i.e. how long does it take to handle and interrupt).
+	\item \textbf{Resposiveness}: how long, after acknowledgement, the operating system takes to \textbf{service} (complete) the task (i.e. the interrupt). It depends on ISR nesting.
+	\item \textbf{Reliability}: degradation of performances should not impact the system:	
+	\begin{itemize}
+		\item Fail soft: Ability to fail in such a way to preserve as much data
+		\item Stability: the system adopts policies such that the most critical high priority tasks execute first, even if some needs of less important tasks cannot be met.
+	\end{itemize}
+\end{itemize}
+
+\section{Algorithms}
+The major scheduling algorithms are listed in Table \ref{tab:RTOS_scheduling}
+\begin{table}[]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|}
+			\hline
+			\textbf{Algorithm} & \textbf{Schedulability analysis} & \textbf{Static/Dynamic} & \textbf{Advantages} & \textbf{Issues} & \textbf{Description} \\ \hline
+			Static Table-driven (Earliest Deadline First) & YES, online & STATIC & Easy & Any change in the requirements of tasks imply the computation of a new schedule & Through a static analysis of the tasks determines, at run time, when a task has to be executed (applicable to periodic tasks). \\ \hline
+			\begin{tabular}[c]{@{}c@{}}Static Priority\\ Driven Preemptive\\ (Rate Monotonic)\end{tabular} & YES, offline & STATIC & Easy & The analysis should be precise to prevent starvation & Every task has a priority, the highest priority is executed first. \\ \hline
+			Dynamic Planning Based & YES, online & DYNAMIC & A task is accepted for execution if and only if is feasible to meet its time constraints & Quite complicate to implement & Before a task execution an attempt is made to create a schedule including previous tasks and the new one. \\ \hline
+			Dynamic Best Effort & NO & DYNAMIC & Easy, no analysis & Some deadlines may be misssed & The system tries to meed dedlines and aborts any started process whose deadline is missed. Until the task is completed or the deadline arrives, it is unknown if time constraints will be met. \\ \hline
+		\end{tabular}%
+	}
+	\caption{RTOS Scheduling types}
+	\label{tab:RTOS_scheduling}
+\end{table}
