@@ -1,20 +1,27 @@
 %% Do not edit unless you really know what you are doing.
 \documentclass[twoside,english]{report}
+
+\usepackage[T1]{fontenc}
+\usepackage[a4paper]{geometry}
+\usepackage[latin9]{inputenc}
 \usepackage[sc]{mathpazo}
 \usepackage[scaled=0.9]{helvet}
-\renewcommand{\ttdefault}{lmtt}
-\usepackage[T1]{fontenc}
-\usepackage[latin9]{inputenc}
-\usepackage[a4paper]{geometry}
-\geometry{verbose,lmargin=2cm,rmargin=2cm}
+\usepackage{babel}
+\usepackage{color}
 \usepackage{fancyhdr}
+\usepackage{listings}
+\usepackage{nomencl}
+
+\geometry{verbose,lmargin=2cm,rmargin=2cm}
 \pagestyle{fancy}
+\renewcommand{\ttdefault}{lmtt}
 \setcounter{secnumdepth}{3}
 \setcounter{tocdepth}{3}
-\setlength{\parskip}{\smallskipamount}
 \setlength{\parindent}{0pt}
-\usepackage{babel}
-\usepackage{nomencl}
+\setlength{\parskip}{\smallskipamount}
+\definecolor{llgray}{rgb}{0.9,0.9,0.9}
+
+\newcommand{\code}[1]{\colorbox{llgray}{\lstinline[basicstyle=\ttfamily\color{black}]{#1}}}
 
 % the following is useful when we have the old nomencl.sty package
 \providecommand{\printnomenclature}{\printglossary}
@@ -28,7 +35,7 @@
 
 %%COMMENTARE PRIMA DI PUBBLICARE 
 %----------------------------------------------------------------
-\usepackage{draftwatermark} %per il watermark sullo sfondo
+%\usepackage{draftwatermark} %per il watermark sullo sfondo
 %----------------------------------------------------------------
 % Per mettere dei commenti per revisione si possono usare i comandi:
 % \unsure per le parti in cui non si � sicuri
@@ -80,67 +87,68 @@
 
 
 
-\chapter{GitHub}
-\section{initialize repository}
+\chapter{Git}
+\section{Initialize repository}
 \begin{itemize}
-\item \textbf{git init}, create a new folder with files 
-\item \textbf{git add $<files>$}, with "." add every file in the folder, "*.tex" just the \LaTeX   files.
-\item \textbf{git commit .}, commits every file in the folder.
-\item \textbf{git remote add $<repo name>$ $<repo url>$},create a new repo on github website
-\item \textbf{git push -u $<repo name>$  $<branch name>$}
+\item \code{git init . }, initialize a new repository in the current folder 
+\item \code{git clone $<repository\ url>$} downloads a full remote repository to the local computer, but has to be done on an empty folder.
+\end{itemize}
+
+\section{Work with GIT}
+\begin{itemize}
+\item \code{git add <files>}, add some files to the staging area.  with "." add every file in the folder, "*.tex" just the \LaTeX  files.
+\item \code{git status}, show the status of the repo (added files, untracked files, etc.
+\item \code{git log}, gives information about all the commits of the repository, with each comment.
+\item \code{git commit -m "message"}, Commits locally the changes. Files marked as ``to-be-committed`` using \code{git add} or \code{git rm} commands will be ''stored`` in the internal database. The commit description is specified with the \textbf{-m} param.
+\item \code{git commit -am "message"}, commits all changed files (it's like a \\ \code{git add . \&\& git commit -m "message"}, using the specified message as commit description.
+\end{itemize}
+
+\section{Remote repository management}
+\begin{itemize}
+\item \code{git fetch <repository name>}, update just the ``header'' of the repo, which contains the list of branches and so on.
+\item \code{git remote add <repo name> <repo url>}, specify a remote repo url that will be used with \code{git push} or \code{git pull} commands. 
+\item \code{git push -u <repo name> <branch name>} upload the changes to \code{repo\_name} in the branch \textt{branch\_name}. \code{-u} means that (in future) typing \code{git push} will always use this host and branch.
+\item \code{git pull <repo name> <branch name>} download the changes from the branch \textt{branch\_name} on \code{repo\_name}. If the remote repo is stored as default (or it's the only one), \code{git pull} will work as well.
 \end {itemize}
-
-
-\section{work on repository}
-\begin{itemize}
-\item \textbf{git add} $<file to add to staging area>$
-\item \textbf{git commit -m "comment" }, commits locally the changes, adding an inline comment.
-\item \textbf{git push -u$<repo name>$ $<branch name>$}, the "-u" is needed only if you want to commit from a specific user.
-\end{itemize}
-
-\section{remote repository management}
-\begin{itemize}
-\item \textbf{git clone $<repository\ url>$} downloads the full remote repository to the local computer, but has to be done on an empty folder.
-\item \textbf{git fetch $<repository\ name>$}, downloads the full remote repository to the local computer, overwriting the local files.
-\item \textbf{git pull $<repository\ name>$ $[branch\ name]$}, downloads the changes from the remote repository.
-\item \textbf{git push -u $<repository\ name>$ $[branch\ name]$}, uploads the changes to the remote repository.
-\end{itemize}
-
-\section{General use}
-\begin{itemize}
-	\item \textbf{git status}, gives information about the changes in the local folder.
-	\item \textbf{git log}, gives information about all the commits of the repository, with each comment.
-\end{itemize}
 
 \section{Branch}
 \subsection{Create a new Branch}
 \begin{itemize}
-\item \textbf{git checkout -b $<new\ branch\ name>$}
-\item \textbf{git stauts}
-\item \textbf{git add $<file\ to\ commit>$}
-\item \textbf{git commit -m "comment"}
-\item \textbf{git push -u $<repo\ name>$ $<new\ branch\ name>$}
+\item \code{git checkout -b <new branch name>}
+\item \code{git add <file to commit>}
+\item \code{git commit -m "comment"}
+\item \code{git push -u <repo name> <new branch name>}
 \end{itemize}
+
 \subsection{Merge Branch with master}
 \begin{itemize}
-	\item \textbf{git checkout master}, move to the master branch (or whatever branch you want to merge with).
-	\item \textbf{git merge $<branch\ name>$}, merges the specified branch with the actual branch.
+\item \code{git checkout master}, move to the master branch (or whatever branch you want to merge with).
+\item \code{git merge <branch name>}, merges the specified branch with the actual branch.
 \end{itemize}
 
-
-\subsection{switch to an other branch}
+\subsection{Switch to an other branch}
 \begin{itemize}
-\item \textbf{git checkout $<branch\ name>$}
+\item \code{git checkout <branch name>}
 \end{itemize}
 
 \section{Undo Commands}
 \begin{itemize}
-\item \textbf{git reset - -hard}, delete changes to the last commit
-\item \textbf{git commit --amend}, change a commit
-\item \textbf{revert $<SHA-1 number>$}, revert to a specific commit
+\item \code{git reset --soft}, unstage committed files
+\item \code{git reset --hard}, delete changes to the last commit
+\item \code{git commit --amend}, change last commit
+\item \code{git revert <SHA-1 commit id>}, revert to a specific commit
 \end{itemize}
 
+Just a note, \code{git commit --amend} will change the whole GIT tree. So, 
+if the commit is already uploaded on  the server, a \code{git push -f} will be
+required.  \code{git push -f} is the second name of Satan. Be aware that
+after that there will be high chances to destroy the whole GIT tree, losing
+everything. Hence, \code{git commit --amend} is bad.
 
+\section{Useful links}
+\begin{itemize}
+\item \url{https://try.github.com}
+\end{itemize}
 
 \begin{figure}[h]
 	\centering
