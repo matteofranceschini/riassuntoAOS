@@ -22,11 +22,11 @@ The major scheduling algorithms are listed in Table \ref{tab:RTOS_scheduling}
 \begin{table}[]
 	\centering
 	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|p{\textwidth/6}|}
+		\begin{tabular}{|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|}
 			\hline
 			\textbf{Algorithm} & \textbf{Schedulability analysis} & \textbf{Static/Dynamic} & \textbf{Advantages} & \textbf{Issues} & \textbf{Description} \\ \hline
-			Static Table-driven (Earliest Deadline First) & YES, online & STATIC & Easy & Any change in the requirements of tasks imply the computation of a new schedule & Through a static analysis of the tasks determines, at run time, when a task has to be executed (applicable to periodic tasks). \\ \hline
-			\begin{tabular}[c]{@{}c@{}}Static Priority\\ Driven Preemptive\\ (Rate Monotonic)\end{tabular} & YES, offline & STATIC & Easy & The analysis should be precise to prevent starvation & Every task has a priority, the highest priority is executed first. \\ \hline
+			Earliest Deadline First & YES, online & DYNAMIC & Easy & Executing a task that could not met the deadline may prevent other tasks to reach their deadlines and the number of tasks that will miss the deadline is unpredictable. & Through a static analysis of the tasks determines, at run time, when a task has to be executed (applicable to periodic tasks). \\ \hline
+			Rate Monotonic & YES, offline & STATIC & Simpler than EDF, if the formula is valid, ensures we will never miss a deadline. & It's not always possible to achieve maximum CPU utilization & Every task has a priority, shortest period task highest priority and therefore is executed first. \\ \hline
 			Dynamic Planning Based & YES, online & DYNAMIC & A task is accepted for execution if and only if is feasible to meet its time constraints & Quite complicate to implement & Before a task execution an attempt is made to create a schedule including previous tasks and the new one. \\ \hline
 			Dynamic Best Effort & NO & DYNAMIC & Easy, no analysis & Some deadlines may be misssed & The system tries to meed dedlines and aborts any started process whose deadline is missed. Until the task is completed or the deadline arrives, it is unknown if time constraints will be met. \\ \hline
 		\end{tabular}%
@@ -34,6 +34,7 @@ The major scheduling algorithms are listed in Table \ref{tab:RTOS_scheduling}
 	\caption{RTOS Scheduling types}
 	\label{tab:RTOS_scheduling}
 \end{table}
+
 
 
 \begin{table}[]
@@ -49,3 +50,5 @@ The major scheduling algorithms are listed in Table \ref{tab:RTOS_scheduling}
 	\caption{RTOS Scheduling Algorithms}
 	\label{tab: RTOS_schedulingl}
 \end{table}
+
+
