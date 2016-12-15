@@ -34,3 +34,18 @@ The major scheduling algorithms are listed in Table \ref{tab:RTOS_scheduling}
 	\caption{RTOS Scheduling types}
 	\label{tab:RTOS_scheduling}
 \end{table}
+
+
+\begin{table}[]
+	\centering
+	\resizebox{\textwidth}{!}{%
+		\begin{tabular}{|m{\textwidth/20}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|}
+			\hline
+			& \textbf{COMPLEXITY} & \textbf{CPU UTILIZATION} & \textbf{DEADLINE} \\ \hline
+			\textbf{RMS} & \textbf{LOW}, the priority is fixed, set by T & MEDIUM, all tasks have dead time $\sum{\frac{C_i}{T_i}} \le N(N^{\frac{1}{N}}-1)$ (max lim $\rightarrow \infty$), max 69\% & hi P process met deadline everytime \\ \hline
+			\textbf{EDF} & HIGH, real time raise priority to task with earlier deadline & HIGH, process are preempted continuously $sum{\frac{C_i}{T_i}} \le 1$, (max 100\%) & if system is overloaded the set of process that fail deadline are large and unpredictable \\ \hline
+		\end{tabular}%
+	}
+	\caption{RTOS Scheduling Algorithms}
+	\label{tab: RTOS_schedulingl}
+\end{table}
