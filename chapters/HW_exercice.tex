@@ -21,21 +21,22 @@
 	\end{itemize}
 
 \section{access register}
-\subsection{method 1: every variable a register}
+\subsection{method 1: define every register}
 declare a variable volatile unisgned with the size of the desired register\\
 \begin{lstlisting}
-/*ex: 8bit register @ address 0x03AA*/ \\
-$($volatile unsigned char$*)$ register $=$ 0x03AA$;$ \\
+/*ex: 8bit register @ address 0x03AA*/ 
+	#define REG0 (volatile unsigned char*) 0x03AA;
 \end{lstlisting}
 
 
-\subsection{method 2: struct}
-struct REG_Struct${$ \\
-volatile unsigned char reg1$;$ \\
-unsigend char padding$[3];$ \\
-volatile unsigned short reg2$;$ \\
-$};$ \\
+\subsection{method 2: struct, block of registers}
+\begin{lstlisting}
+struct REG_Struct {
+	volatile unsigned char reg1;	//@ 0x00
+	unsigend char padding[3];	//@ 0x01
+	volatile unsigned short reg2;	//@ 0x04
+}; 
 
-$\#$define (struct REG_Struct $*$) $<$address$>$
-
+#define (struct REG_Struct *) <address> // address of the first reg
+\end{lstlisting}
 

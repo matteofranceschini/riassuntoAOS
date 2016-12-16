@@ -199,6 +199,18 @@ A detailed description is provided in Table \ref{Tab:Algorithms}.
 	\item{\textbf{multilevel feedback queue}}, process starts in the first queue but if do not complete after the first execution scheduler in the next queue
 \end{itemize}
 
+\section{Multiprocessor Scheduling}
+\begin{table}[]
+	\centering
+	\caption{My caption}
+	\label{my-label}
+	\begin{tabular}{|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|}
+		\hline
+		& \textbf{COMPLEXITY} & \textbf{OVERHEAD} & CPU UTILIZATION \\ \hline
+		\textbf{MASTER/ SLAVE} & LOW, there is a master processor that manage the ready process queue and the common resources & LOW, static assignament of process there are few content switch & LOW, a low demanding task can lock a cpu \\ \hline
+		\textbf{PEER} & HIGH, every processor has its own scheduler that have to race for common resources & HIGH, the same process can start in a processor and then jump to another & HIGH \\ \hline
+	\end{tabular}
+\end{table}
 \chapter{RTOS}
 \input{./chapters/RTOS.tex}
 
