@@ -17,15 +17,93 @@ As seen from Figure \ref{Fig:Build_process}, the building process is composed by
 	\label{Fig:Build_process}
 \end{figure}
 
+\pagebreak
+
 \section{Makefile}
-TODO
+\subsection{Introduction}
+The makefile is a build automator file: when we call the \code{make} command, it tells which files have to be recompiled, relinked, executed, eccc.
+
+Makefiles have 5 types of rules
+\begin{itemize}
+	\item Explicit goals: they specify how to update a specific file (i.e. main.cpp or main.o)
+	\item Implicit goals: they specify how to update a generic class of files (i.e. *.c or *.o)
+	\item Variable definition: useful to keep the file reusable in different conditions, by just editing a part of it (if we define the variable \code{NAME=main} in the head of the file, we can use it in the rest of the code )
+	\item Directives: they specify when to read other makefiles and when we don't need some parts of the code (where to jump)
+	\item Comments: to describe the makefile code, they start with \#%\sharp;
+\end{itemize}
+
+\subsection{A goal structure}
+A goal is always composed by
+\begin{lstlisting}
+target : prerequisites
+	commands
+\end{lstlisting}
+in which:
+\begin{itemize}
+\item Target: are the output files	
+\item Prerequisites: are the files on which the \code{Targets} depend
+\item Commands: the commands that have to be executed to built the \code{Targets} files starting from the \code{Prerequisites} files.
+\end{itemize}
+
+Every file name has to be seen as
+
+\begin{lstlisting}
+[p]stem[s].ext
+\end{lstlisting}
+in which:
+\begin{itemize}
+	\item \code{p} is the prefix, in common with every file of the class.
+	\item \code{stem} is the unique part of the file, that makes it different from the others. In the code is represented by \%.
+	\item \code{s} is the suffix, in common with every file of the class.
+	\item \code{ext} is the extension, in common with every file of the class.
+\end{itemize}
+To write implicit goals, we can use:
+\begin{itemize}
+	\item "\$ @" is the target
+	\item "\$ \textless"  is the first prerequisite
+	\item "\$ ?" all the recently edited prerequisites
+	\item "\$ \textasciicircum" all the prerequisites
+	\item "\$ *" the \code{stem} assigned to \%
+	
+\end{itemize}
+\pagebreak
+\subsection{Code Example}
+
+\begin{lstlisting}[language=make, basicstyle=\ttfamily \scriptsize]
+OUTPUT= main #output file name, changing it here will change it in the whole file
+OBJ= main.o #object file(s) name 
+CXX=g++	#the name of the compiler, it could be omitted if you call it CXX: its a standard variable
+CXXVARS= -Wall -std=c++11 -c #compilation variables: show warnings, compile with c++11 
+			     #and stop the compilation at the object creation (do not link the file)
+
+all:$(OUTPUT)  #if i call "make" without parameters i jump here
+
+$(OUTPUT):$(OBJ) #meaning: please generate a $(OUTPUT) file name starting 
+		  #from the $(OBJ) object file and, if not present, execute the command
+$(CXX) $^ -o $@   #g++ main.o -o main #the command to be executed
+
+%.o:%.cpp	#meaning: please generate a whatever.o object file for every whatever.cpp file. 
+		#If the object file is not present, execute the command
+$(CXX) $< $(CXXVARS) #the command is g++ whatever.cpp -Wall -std=c++11 -c
+
+clean: #if someone calls "make clean"
+rm -f *.o #remove every object file
+rm -f $(OUTPUT) #remove every output file
+
+diocane: #if someone calls "make diocane"
+./$(OUTPUT) #execute the output file
+
+
+\end{lstlisting}
+
+
 
 \section{Linker Script}
 The linker script is a file that defines where the various parts of the compiled code are actually stored in memory.
 
 The simplest possible linker script has just one command:\code[SECTIONS]. This command describes the memory layout of the building output file.
 
-Let's assume that the program consists only of code, initialized data and uninitialized data: these will be, respectively, stored in the \code[.text], \code{.data} and \code{.bss} sections.
+Let's assume that the program consists only of code, initialized data and uninitialized data: these will be, respectively, stored in the \code{.text}, \code{.data} and \code{.bss} sections.
 
 The linker script that could place these section in the correct parts of the memory would be something like:
 
@@ -34,7 +112,7 @@ SECTIONS
 {
 	. = 0X10000; /* everything starts at this address*/
 	.text : {*(.text)} /*every text file goes here*/ 
-	. = 0x8000000;
+	. = 0x8000000; /*everthing after will be shifted at this */
 	.data : { *(.data)}
 	.bss : {*.(.bss)}
 
