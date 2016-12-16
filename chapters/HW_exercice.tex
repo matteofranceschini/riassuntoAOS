@@ -1,0 +1,42 @@
+\section{bit operation}
+\begin{itemize}
+	\item left shift operator \code{(1<<2)} = 0b0100
+	\item setting 1a precise bit keeping unchanged the others for exampe 0b0000 $\rightarrow$ 0b0100 \\
+	0b0000 = 0b0000 | 0b0100; \\
+	that is the same of
+	0b0000 |= 0b0100; 
+	
+
+	\item setting 0 to a precise bit\\
+		ex: 0b1111 $\rightarrow$ 0b1011 \\ 0b1111 \&= 0b1011; \\0b1111 $\&$= \code{(2<<0)}
+		
+	\item check if a bit is 1 \\ 
+	ex: if(0b0010 $\&$ 0b0010) $==$ 1   VERO \\	
+	ex: if(0b0010 $\&$ 0b0001) $==$ 1   FALSO
+	
+	\item check if a bit is 0 \\
+	ex: if(0b1101 | $\sim$(0b0010)) $==$ 0  VERO \\	
+	ex: if(0b1111 | $\sim$(0b0010)) $==$ 0   FALSO \\	
+
+	\end{itemize}
+
+\section{access register}
+\subsection{method 1: define every register}
+declare a variable volatile unisgned with the size of the desired register\\
+\begin{lstlisting}
+/*ex: 8bit register @ address 0x03AA*/ 
+	#define REG0 (volatile unsigned char*) 0x03AA;
+\end{lstlisting}
+
+
+\subsection{method 2: struct, block of registers}
+\begin{lstlisting}
+struct REG_Struct {
+	volatile unsigned char reg1;	//@ 0x00
+	unsigend char padding[3];	//@ 0x01
+	volatile unsigned short reg2;	//@ 0x04
+}; 
+
+#define (struct REG_Struct *) <address> // address of the first reg
+\end{lstlisting}
+

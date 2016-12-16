@@ -17,20 +17,63 @@ The main features of an RTOS are:
 	\end{itemize}
 \end{itemize}
 
+
+
+
 \section{Algorithms}
-The major scheduling algorithms are listed in Table \ref{tab:RTOS_scheduling}
+%\begin{itemize}
+%	\item \textbf{static-table driven}	
+%	
+%	
+%	\item \textbf{dynamic-best effort}
+%	\item \textbf{}
+%\end{itemize}\
+	
+\begin{table}[]
+	\centering
+	\resizebox{\textwidth*9/10}{!}{%
+		\begin{tabular}[\scriptsize]{|m{\textwidth/10}|m{\textwidth/10}|m{\textwidth/10}|m{\textwidth/10}|m{\textwidth/10}|m{\textwidth/10}|}
+			\hline
+			\textbf{Algorithm} & \textbf{Online Schedulability analysis} & \textbf{Static/Dynamic} & \textbf{Advantages} & \textbf{Issues} & \textbf{Description} \\ \hline
+			
+			\textbf{Static-Table Driven, (Time triggered system)} & NO. & STATIC & Easy to implement & the system can't manage tasks that aren't in the TDL & Sync of process and dependancies are saved in a TDL (Task Descriptor List). At every clock process are executed according to this table \\ \hline
+			
+			\textbf{Dynamic Best Effort (Earliest Deadline First)} & NO. Offline the condition is $\sum \frac{C_i}{T_i} < 1$  & DYNAMIC & Easy, no analysis of schedulability and only a condition $\sum \frac{C_i}{T_i} \le 1$. Ideal for periodic tasks & Executing a task that could not met the deadline may prevent other tasks to reach their deadlines and the number of tasks that will miss the deadline is unpredictable. & Through a static analysis of the tasks determines, at run time, when a task has to be executed (applicable to periodic tasks). The system tries to meet dedlines and aborts any started process whose deadline is missed. Until the task is completed or the deadline arrives, it is unknown if time constraints will be met. \\ \hline
+			
+			\textbf{Rate Monotonic} & NO. The offline condition of schedulability is $\sum \frac{C_i}{T_i} < n(2^{\frac{1}{n}}-1)$ there is a upper limit 69 percent  & STATIC & Simpler than EDF, if the formula is valid, ensures we will never miss a deadline. & It's not always possible to achieve maximum CPU utilization & Every task has a priority, shortest period task highest priority and therefore is executed first. \\ \hline
+			
+			\textbf{Dynamic Planning Based} & YES & DYNAMIC & A task is accepted for execution if and only if is feasible to meet its time constraints & Quite complicate to implement & Before a task execution an attempt is made to create a schedule including previous tasks and the new one. \\ \hline
+			
+		\end{tabular}%
+	}
+	\caption{My caption}
+	\label{my-label}
+\end{table}
+
+
+
+
+
 \begin{table}[]
 	\centering
 	\resizebox{\textwidth}{!}{%
-		\begin{tabular}{|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|}
+		\begin{tabular}{|m{\textwidth/20}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|}
 			\hline
-			\textbf{Algorithm} & \textbf{Schedulability analysis} & \textbf{Static/Dynamic} & \textbf{Advantages} & \textbf{Issues} & \textbf{Description} \\ \hline
-			Earliest Deadline First & YES, online & DYNAMIC & Easy & Executing a task that could not met the deadline may prevent other tasks to reach their deadlines and the number of tasks that will miss the deadline is unpredictable. & Through a static analysis of the tasks determines, at run time, when a task has to be executed (applicable to periodic tasks). \\ \hline
-			Rate Monotonic & YES, offline & STATIC & Simpler than EDF, if the formula is valid, ensures we will never miss a deadline. & It's not always possible to achieve maximum CPU utilization & Every task has a priority, shortest period task highest priority and therefore is executed first. \\ \hline
-			Dynamic Planning Based & YES, online & DYNAMIC & A task is accepted for execution if and only if is feasible to meet its time constraints & Quite complicate to implement & Before a task execution an attempt is made to create a schedule including previous tasks and the new one. \\ \hline
-			Dynamic Best Effort & NO & DYNAMIC & Easy, no analysis & Some deadlines may be misssed & The system tries to meed dedlines and aborts any started process whose deadline is missed. Until the task is completed or the deadline arrives, it is unknown if time constraints will be met. \\ \hline
+			& \textbf{COMPLEXITY} & \textbf{CPU UTILIZATION} & \textbf{DEADLINE} \\ \hline
+			\textbf{RMS} & \textbf{LOW}, the priority is fixed, set by T & MEDIUM, all tasks have dead time $\sum{\frac{C_i}{T_i}} \le N(N^{\frac{1}{N}}-1)$ (max lim $\rightarrow \infty$), max 69\% & hi P process met deadline everytime \\ \hline
+			\textbf{EDF} & HIGH, real time raise priority to task with earlier deadline & HIGH, process are preempted continuously $sum{\frac{C_i}{T_i}} \le 1$, (max 100\%) & if system is overloaded the set of process that fail deadline are large and unpredictable \\ \hline
 		\end{tabular}%
 	}
-	\caption{RTOS Scheduling types}
-	\label{tab:RTOS_scheduling}
+	\caption{RTOS Scheduling Algorithms}
+	\label{tab: RTOS_schedulingl}
 \end{table}
+
+
+\chapter{RT scheduling}
+
+\section {cyclic scheduling}
+\section{deterministic scheduling}
+\section{capacity-based scheduling}
+\section{dynamic priority scheduling}
+\section{Scheduling Task with imprecise Results}
+

@@ -12,6 +12,7 @@
 \usepackage{listings}
 \usepackage{nomencl}
 
+
 \geometry{verbose,lmargin=2cm,rmargin=2cm}
 \pagestyle{fancy}
 \renewcommand{\ttdefault}{lmtt}
@@ -88,121 +89,22 @@
 
 
 \chapter{Git}
-\section{Initialize repository}
-\begin{itemize}
-\item \code{git init .}, initialize a new repository in the current folder 
-\item \code{git clone <repository url>} downloads a full remote repository to the local computer, but has to be done on an empty folder.
-\end{itemize}
-
-\section{Work with GIT}
-\begin{itemize}
-\item \code{git add <files>}, add some files to the staging area.  with "." add every file in the folder, "*.tex" just the \LaTeX  files.
-\item \code{git status}, show the status of the repo (added files, untracked files, etc.
-\item \code{git log}, gives information about all the commits of the repository, with each comment.
-\item \code{git commit -m "message"}, Commits locally the changes. Files marked as ``to-be-committed`` using \code{git add} or \code{git rm} commands will be ''stored`` in the internal database. The commit description is specified with the \textbf{-m} param.
-\item \code{git commit -am "message"}, commits all changed files (it's like a \\ \code{git add . \&\& git commit -m "message"}, using the specified message as commit description.
-\end{itemize}
-
-\section{Remote repository management}
-\begin{itemize}
-\item \code{git fetch <repository name>}, update just the ``header'' of the repo, which contains the list of branches and so on.
-\item \code{git remote add <repo name> <repo url>}, specify a remote repo url that will be used with \code{git push} or \code{git pull} commands. 
-\item \code{git push -u <repo name> <branch name>} upload the changes to \code{repo_name} in the branch \code{branch_name}. \code{-u} means that (in future) typing \code{git push} will always use this host and branch.
-\item \code{git pull <repo name> <branch name>} download the changes from the branch \code{branch_name} on \code{repo_name}. If the remote repo is stored as default (or it's the only one), \code{git pull} will work as well.
-\end {itemize}
-
-\section{Branch}
-\subsection{Create a new Branch}
-\begin{itemize}
-\item \code{git checkout -b <new branch name>}
-\item \code{git add <file to commit>}
-\item \code{git commit -m "comment"}
-\item \code{git push -u <repo name> <new branch name>}
-\end{itemize}
-
-\subsection{Merge Branch with master}
-\begin{itemize}
-\item \code{git checkout master}, move to the master branch (or whatever branch you want to merge with).
-\item \code{git merge <branch name>}, merges the specified branch with the actual branch.
-\end{itemize}
-
-\subsection{Switch to an other branch}
-\begin{itemize}
-\item \code{git checkout <branch name>}
-\end{itemize}
-
-\section{Undo Commands}
-\begin{itemize}
-\item \code{git reset --soft}, unstage committed files
-\item \code{git reset --hard}, delete changes to the last commit
-\item \code{git commit --amend}, change last commit
-\item \code{git revert <SHA-1 commit id>}, revert to a specific commit
-\end{itemize}
-
-Just a note, \code{git commit --amend} will change the whole GIT tree. So, 
-if the commit is already uploaded on  the server, a \code{git push -f} will be
-required.  \code{git push -f} is the second name of Satan. Be aware that
-after that there will be high chances to destroy the whole GIT tree, losing
-everything. Hence, \code{git commit --amend} is bad.
-
-\section{Useful links}
-\begin{itemize}
-\item \url{https://try.github.com}
-\end{itemize}
-
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth]{gfx/git_graph}
-	
-	\caption{Comandi GIT}
-	\label{Fig:Commands}
-\end{figure}
-
+\input{./chapters/git.tex}
 
 \chapter{Scheduling}
-\section{Criteria}
-\begin{itemize}
-\item \textbf{CPU utilization}, keep CPU as busy as possible
-\item \textbf{throughput}, number of processes that complete their execution per time unit
-\item \textbf{turnaround time}, amount of time to execute a particular process
-\item \textbf{waiting time}, amount of time a process has been waiting in the ready queue
-\item \textbf{response time}, amount of time it takes from when a request was submitted until the first response is produce, not output
-
-\end{itemize}
-\section{Algorithms}
-A detailed description is provided in Table \ref{Tab:Algorithms}.
-\begin{table}[]
-	\centering
-	\resizebox{\textwidth/4*3}{!}{%
-		\begin{tabular}{|m{\textwidth/11}|m{\textwidth/10}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/9}|m{\textwidth/9}|m{\textwidth/8}|}
-			\hline
-			\textbf{Scheduler}                   & \textbf{Preemptive} & \textbf{Priority} & \textbf{CPU Utilization} & \textbf{Thrughput} & \textbf{Turnaround time}                             & \textbf{Waiting time}                           & \textbf{Response time}                          & \textbf{Advantages}                                                                                                                    & \textbf{Issues}                                                                                         & \textbf{Description}                                                                                                       \\ \hline
-			First Come First Served (FCFS)       & NO                  & NO                & LOW                      & LOW                & SHORTEST                                             & HIGH                                            & HIGH                                            & Semplicity                                                                                                                             & Processes may starve if after long process                                                              & Favours CPU-bound processes                                                                                                \\ \hline
-			Shortest Job First (SJF)             & NO                  & NO                & HIGH                     & HIGH               & LONG for long processes, SHORTEST for fast processes & HIGH for long processes, LOW for fast processes & HIGH for long processes, LOW for fast processes & Minimum Average Waiting time                                                                                                           & Long processes may starve, must estimate process time: not implementable in most cases for this reason. & Favours the processes that need less CPU-time                                                                              \\ \hline
-			Shortest Remaining Time First (SRTF) & YES                 & NO                & HIGH                     & HIGH               & LONG for long processes, SHORTEST for fast processes & MEDIUM                                          & MEDIUM                                          & If a shorter task is available, it runs immediately in CPU, less overhead (the scheduler decides only when another process approaches) & Long processes may starve (worst than SJF), must estimate process time.                                 & It's the SJF but with preemption                                                                                           \\ \hline
-			Higher Response Ratio Next           & NO                  & YES               & HIGH                     & MEDIUM             & MEDIUM                                               & LOW                                             & MEDIUM                                          & Prevents starvation by assigning higher priority to processes waiting for a long time.                                                 & must estimate process time                                                                              & It's the evolution of SJF.                                                                                                 \\ \hline
-			Feedback                             & YES                 & NO                & HIGH                     & LOW                & LONG                                                 & LOW                                             & LOW                                             & No starving processes, don't know remaining time process needs to execute.                                                             & High overhead and continuous context switch                                                             & Penalizes jobs that have been runnning longer                                                                              \\ \hline
-			Fair-Share Scheduling (FSS)          & YES                 & NO                & LOW                      & LOW                & LONG                                                 & LOW                                             & LOW                                             & Every process has its fair share of CPU time, useful with multiple group users.                                                        & Processes in crowded groups get less CPU time                                                           & Applies the round-robin scheduling strategy at each level of abstraction (processes, users, groups, etc.)                  \\ \hline
-			Round Robin                          & YES                 & NO                & HIGH                     & MEDIUM             & LONG                                                 & LOW                                             & LOW                                             & No starvation, equal waiting time                                                                                                      & Longer turnaround time (every process takes longer if slower than a time quantum)                       & Uses preemption based on a clock, every process is executed in 1 time quantum and than leaves the CPU to the next process. \\ \hline
-		\end{tabular}%
-	}
-	\caption{Main Scheduling Algorithms}
-	\label{Tab:Algorithms}
-\end{table}
-
-
-\section{Multilevel Queue}
-\begin{itemize}
-	\item{\textbf{multilevel queue}}, the scheduler select the queue for a process according to its type. Process does not change its queue
-	\item{\textbf{multilevel feedback queue}}, process starts in the first queue but if do not complete after the first execution scheduler in the next queue
-\end{itemize}
+\input{./chapters/scheduling.tex}
 
 \chapter{RTOS}
 \input{./chapters/RTOS.tex}
 
+\chapter{Linux App Dev}
+\input{./chapters/LADEV.tex}
+
 \chapter{Exam Questions}
 \input{./chapters/questions.tex}
 
+\chapter{Hardware Exercice}
+\input{./chapters/HW_exercice.tex}
 
 
 %inserire un PDF nel pdf
