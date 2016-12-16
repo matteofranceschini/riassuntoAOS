@@ -44,3 +44,34 @@ EDF has more CPU time occupation than RM, but if it gets overloaded there's no w
 
 RM hardly gets always a 100\% busy CPU, but if it gets overloaded, higher priority tasks will be the favourited, thereby reaching successfully completing before the deadline.
 
+\section{Describe the main algorithms for the scheduling of a single-core CPU, paying particular attention to the possible overhead, fairness and reactivity.}
+
+Scheduling algorithms try to optimize different key factors, with the aim of running multiple tasks sequently, as they were run at the same time.
+These key factors, on which the schedulers are optimized, may be:
+\begin{itemize}
+	\item CPU utilization
+	\item Fairness
+	\item Reactivity
+	\item Responsiveness
+	\item other...
+\end{itemize}
+
+Ovbiously, one cannot optimize for a key factor without accepting compromises on others: for this reason there is no perfect algorithm, just the most suitable for each application.
+
+Each algorithm can also have different features, depending on the needs of the system. They could be:
+\begin{itemize}
+	\item Preemptive or not preemptive
+	\item With fixed priority or not
+	\item With multiple queues or not
+\end{itemize}
+
+The main algorithms for scheduling, non real-time on a single-core CPU are:
+\begin{itemize}
+	\item First-come-First served: it's easily implemented, quite fair if there are no blocking tasks, with low overhead but also low reactivity.
+	\item Round-Robin: It switches continuously (in a pre-defined time-base) between every task in the ready queue, it's highly fair a discretely reactive, but with high overhead. Eventually, longer tasks may take a lot to finish, due to the continuous interruptions.
+	\item Shortest Job First: it has some overhead in calculating the shortest job (and it does not work correctly in the first transient, while the recurrent task have been started just once or a couple of times). It's not fair with longer tasks and reactive only if it implements preemption.
+	\item Feedback: penalizes jobs that have been running longer, it's highly fair because starvation cannot occur, but the overhead of calculating the highest priority task can be high and the responsiveness is low, if there are a lot of tasks.
+	\item Fair share: it divides the run queue in various fixed sub-queues, to which a fair-share of 100\% CPU time is assigned. This algorithm is fair but it may waste some CPU time. 
+	\item Higher Response Ratio Next: it's like a shortest job first, but is weighted with the queue wait time; if a task is not short but it's waiting for a long time, it will access the CPU anyway. It's a fair algorithm and has some overhead. Reaction depends whether or not a fixed priority with preemption is implemented.
+\end{itemize}
+
