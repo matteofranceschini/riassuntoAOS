@@ -1,3 +1,4 @@
+
 \section{Building process}
 As seen from Figure \ref{Fig:Build_process}, the building process is composed by various phases:
 \begin{itemize}
@@ -28,12 +29,25 @@ Let's assume that the program consists only of code, initialized data and uninit
 
 The linker script that could place these section in the correct parts of the memory would be something like:
 
+\begin{lstlisting}
+SECTIONS
+{
+	. = 0X10000; /* everything starts at this address*/
+	.text : {*(.text)} /*every text file goes here*/ 
+	. = 0x8000000;
+	.data : { *(.data)}
+	.bss : {*.(.bss)}
 
-\begin{figure}[h]
-	\centering
-	\includegraphics[width=\textwidth/3]{gfx/linker_file}
-	
-	\caption{Linker file example}
-	\label{Fig:Linker File}
-\end{figure}
+}
+
+\end{lstlisting}
+
+
+%\begin{figure}[h]
+%	\centering
+%	\includegraphics[width=\textwidth/3]{gfx/linker_file}
+%	
+%	\caption{Linker file example}
+%	\label{Fig:Linker File}
+%\end{figure}
 
