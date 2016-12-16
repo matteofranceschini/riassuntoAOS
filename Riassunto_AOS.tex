@@ -12,6 +12,7 @@
 \usepackage{listings}
 \usepackage{nomencl}
 
+
 \geometry{verbose,lmargin=2cm,rmargin=2cm}
 \pagestyle{fancy}
 \renewcommand{\ttdefault}{lmtt}
@@ -101,6 +102,7 @@
 \item \code{git log}, gives information about all the commits of the repository, with each comment.
 \item \code{git commit -m "message"}, Commits locally the changes. Files marked as ``to-be-committed`` using \code{git add} or \code{git rm} commands will be ''stored`` in the internal database. The commit description is specified with the \textbf{-m} param.
 \item \code{git commit -am "message"}, commits all changed files (it's like a \\ \code{git add . \&\& git commit -m "message"}, using the specified message as commit description.
+\\ \code{git reset HEAD <nome\ file>} to remove a file from the staging area 
 \end{itemize}
 
 \section{Remote repository management}
@@ -206,6 +208,8 @@ A detailed description is provided in Table \ref{Tab:Algorithms}.
 \chapter{Exam Questions}
 \input{./chapters/questions.tex}
 
+\chapter{Hardware Exercice}
+\input{./chapters/HW_exercice.tex}
 
 
 %inserire un PDF nel pdf
