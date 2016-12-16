@@ -162,55 +162,8 @@ everything. Hence, \code{git commit --amend} is bad.
 
 
 \chapter{Scheduling}
-\section{Criteria}
-\begin{itemize}
-\item \textbf{CPU utilization}, keep CPU as busy as possible
-\item \textbf{throughput}, number of processes that complete their execution per time unit
-\item \textbf{turnaround time}, amount of time to execute a particular process
-\item \textbf{waiting time}, amount of time a process has been waiting in the ready queue
-\item \textbf{response time}, amount of time it takes from when a request was submitted until the first response is produce, not output
+\input{./chapters/scheduling.tex}
 
-\end{itemize}
-\section{Algorithms}
-A detailed description is provided in Table \ref{Tab:Algorithms}.
-\begin{table}[]
-	\centering
-	\resizebox{\textwidth/4*3}{!}{%
-		\begin{tabular}{|m{\textwidth/11}|m{\textwidth/10}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/9}|m{\textwidth/9}|m{\textwidth/8}|}
-			\hline
-			\textbf{Scheduler}                   & \textbf{Preemptive} & \textbf{Priority} & \textbf{CPU Utilization} & \textbf{Thrughput} & \textbf{Turnaround time}                             & \textbf{Waiting time}                           & \textbf{Response time}                          & \textbf{Advantages}                                                                                                                    & \textbf{Issues}                                                                                         & \textbf{Description}                                                                                                       \\ \hline
-			First Come First Served (FCFS)       & NO                  & NO                & LOW                      & LOW                & SHORTEST                                             & HIGH                                            & HIGH                                            & Semplicity                                                                                                                             & Processes may starve if after long process                                                              & Favours CPU-bound processes                                                                                                \\ \hline
-			Shortest Job First (SJF)             & NO                  & NO                & HIGH                     & HIGH               & LONG for long processes, SHORTEST for fast processes & HIGH for long processes, LOW for fast processes & HIGH for long processes, LOW for fast processes & Minimum Average Waiting time                                                                                                           & Long processes may starve, must estimate process time: not implementable in most cases for this reason. & Favours the processes that need less CPU-time                                                                              \\ \hline
-			Shortest Remaining Time First (SRTF) & YES                 & NO                & HIGH                     & HIGH               & LONG for long processes, SHORTEST for fast processes & MEDIUM                                          & MEDIUM                                          & If a shorter task is available, it runs immediately in CPU, less overhead (the scheduler decides only when another process approaches) & Long processes may starve (worst than SJF), must estimate process time.                                 & It's the SJF but with preemption                                                                                           \\ \hline
-			Higher Response Ratio Next           & NO                  & YES               & HIGH                     & MEDIUM             & MEDIUM                                               & LOW                                             & MEDIUM                                          & Prevents starvation by assigning higher priority to processes waiting for a long time.                                                 & must estimate process time                                                                              & It's the evolution of SJF.                                                                                                 \\ \hline
-			Feedback                             & YES                 & NO                & HIGH                     & LOW                & LONG                                                 & LOW                                             & LOW                                             & No starving processes, don't know remaining time process needs to execute.                                                             & High overhead and continuous context switch                                                             & Penalizes jobs that have been runnning longer                                                                              \\ \hline
-			Fair-Share Scheduling (FSS)          & YES                 & NO                & LOW                      & LOW                & LONG                                                 & LOW                                             & LOW                                             & Every process has its fair share of CPU time, useful with multiple group users.                                                        & Processes in crowded groups get less CPU time                                                           & Applies the round-robin scheduling strategy at each level of abstraction (processes, users, groups, etc.)                  \\ \hline
-			Round Robin                          & YES                 & NO                & HIGH                     & MEDIUM             & LONG                                                 & LOW                                             & LOW                                             & No starvation, equal waiting time                                                                                                      & Longer turnaround time (every process takes longer if slower than a time quantum)                       & Uses preemption based on a clock, every process is executed in 1 time quantum and than leaves the CPU to the next process. \\ \hline
-		\end{tabular}%
-	}
-	\caption{Main Scheduling Algorithms}
-	\label{Tab:Algorithms}
-\end{table}
-
-
-\section{Multilevel Queue}
-\begin{itemize}
-	\item{\textbf{multilevel queue}}, the scheduler select the queue for a process according to its type. Process does not change its queue
-	\item{\textbf{multilevel feedback queue}}, process starts in the first queue but if do not complete after the first execution scheduler in the next queue
-\end{itemize}
-
-\section{Multiprocessor Scheduling}
-\begin{table}[]
-	\centering
-	\caption{My caption}
-	\label{my-label}
-	\begin{tabular}{|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|}
-		\hline
-		& \textbf{COMPLEXITY} & \textbf{OVERHEAD} & CPU UTILIZATION \\ \hline
-		\textbf{MASTER/ SLAVE} & LOW, there is a master processor that manage the ready process queue and the common resources & LOW, static assignament of process there are few content switch & LOW, a low demanding task can lock a cpu \\ \hline
-		\textbf{PEER} & HIGH, every processor has its own scheduler that have to race for common resources & HIGH, the same process can start in a processor and then jump to another & HIGH \\ \hline
-	\end{tabular}
-\end{table}
 \chapter{RTOS}
 \input{./chapters/RTOS.tex}
 
