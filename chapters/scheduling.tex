@@ -1,4 +1,5 @@
 \section{Criteria}
+Algorithms can be optimized for different goals:
 \begin{itemize}
 \item \textbf{CPU utilization}, keep CPU as busy as possible
 \item \textbf{throughput}, number of processes that complete their execution per time unit
@@ -7,12 +8,13 @@
 \item \textbf{response time}, amount of time it takes from when a request was submitted until the first response is produce, not output
 
 \end{itemize}
+
 \section{Algorithms}
 A detailed description is provided in Table \ref{Tab:Algorithms}.
 \begin{table}[]
 	\centering
-	\resizebox{\textwidth/4*3}{!}{%
-		\begin{tabular}{|m{\textwidth/11}|m{\textwidth/10}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/9}|m{\textwidth/9}|m{\textwidth/8}|}
+	\resizebox{\textwidth/8*7}{!}{%
+		\begin{tabular}{|m{\textwidth/11}|m{\textwidth/10}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/9}|m{\textwidth/9}|m{\textwidth/9}|m{\textwidth/11}|m{\textwidth/7}|m{\textwidth/9}|m{\textwidth/8}|}
 			\hline
 			\textbf{Scheduler}                   & \textbf{Preemptive} & \textbf{Priority} & \textbf{CPU Utilization} & \textbf{Thrughput} & \textbf{Turnaround time}                             & \textbf{Waiting time}                           & \textbf{Response time}                          & \textbf{Advantages}                                                                                                                    & \textbf{Issues}                                                                                         & \textbf{Description}                                                                                                       \\ \hline
 			First Come First Served (FCFS)       & NO                  & NO                & LOW                      & LOW                & SHORTEST                                             & HIGH                                            & HIGH                                            & Semplicity                                                                                                                             & Processes may starve if after long process                                                              & Favours CPU-bound processes                                                                                                \\ \hline
@@ -28,6 +30,7 @@ A detailed description is provided in Table \ref{Tab:Algorithms}.
 	\label{Tab:Algorithms}
 \end{table}
 
+\pagebreak
 
 \section{Multilevel Queue}
 \begin{itemize}
@@ -36,15 +39,16 @@ A detailed description is provided in Table \ref{Tab:Algorithms}.
 \end{itemize}
 
 \section{Multiprocessor Scheduling}
-\begin{table}[]
+\begin{table}[h]
 	\centering
-	\caption{My caption}
-	\label{my-label}
-	\begin{tabular}{|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|m{\textwidth/11}|}
+
+	\begin{tabular}{|m{\textwidth/10}|m{\textwidth/4}|m{\textwidth/4}|m{\textwidth/4}|}
 		\hline
 		& \textbf{COMPLEXITY} & \textbf{OVERHEAD} & CPU UTILIZATION \\ \hline
 		\textbf{MASTER/ SLAVE} & LOW, there is a master processor that manage the ready process queue and the common resources & LOW, static assignament of process there are few content switch & LOW, a low demanding task can lock a cpu \\ \hline
 		\textbf{PEER} & HIGH, every processor has its own scheduler that have to race for common resources & HIGH, the same process can start in a processor and then jump to another & HIGH \\ \hline
 	\end{tabular}
+	\caption{Multiprocessing scheduling characteristics}
+	\label{tab:multiprocessing}
 \end{table}
 
