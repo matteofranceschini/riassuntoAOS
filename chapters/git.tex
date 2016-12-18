@@ -1,7 +1,16 @@
 \section{Initialize repository}
+\subsection{Initialize from remote repo}
 \begin{itemize}
 \item \code{git init .}, initialize a new repository in the current folder 
 \item \code{git clone <repository url>} downloads a full remote repository to the local computer, but has to be done on an empty folder.
+\end{itemize}
+\subsection{Initialize locally and push remotely}
+\begin{itemize}
+	\item \code{git init .}, initialize a new repository in the current folder 
+	\item \code{git add <file> <file>}, adds files to the commit
+	\item \code{git commit -m"<comment>"}, commits the changes
+	\item \code{git remote add <repo\_name> <repo\_url>}, adds a remote repository (default name: origin)
+	\item \code{git push -u <repo\_name> <repo\_branch>}, pushes the changes to the remote repository and the \code{-u} tells git to remember repo name and branch for the next pushes
 \end{itemize}
 
 \section{Work with GIT}
@@ -25,7 +34,7 @@
 \section{Branch}
 \subsection{Create a new Branch}
 \begin{itemize}
-\item \code{git checkout -b <new branch name>}
+\item \code{git checkout -b <new branch name>} or \code{git branch <new branch name>} create the new branch
 \item \code{git add <file to commit>}
 \item \code{git commit -m "comment"}
 \item \code{git push -u <repo name> <new branch name>}
@@ -35,6 +44,7 @@
 \begin{itemize}
 \item \code{git checkout master}, move to the master branch (or whatever branch you want to merge with).
 \item \code{git merge <branch name>}, merges the specified branch with the actual branch.
+\item \code{git branch -d <branch name>} deletes the branch, once it's merged with the master there's no need to keep it. The \textbf{forced} delete is done by using \code{-D}.
 \end{itemize}
 
 \subsection{Switch to an other branch}
@@ -42,13 +52,19 @@
 \item \code{git checkout <branch name>}
 \end{itemize}
 
+\subsection{Branch info}
+\begin{itemize}
+	\item \code{git branch} shows all the branches.
+\end{itemize}
+
 \section{Undo Commands}
 \begin{itemize}
-\item \code{git reset --soft}, unstage committed files
-\item \code{git reset --hard}, delete changes to the last commit
+\item \code{git rm <file_name>} removes phisically the file from the disk and from the repo
+\item \code{git reset --soft}, unstage committed files (does not edit the files).
+\item \code{git reset --hard}, delete changes to the last commit, editing the files.
 \item \code{git commit --amend}, change last commit
 \item \code{git revert <SHA-1 commit id>}, revert to a specific commit
-\item \code{git checkout <filename>}, reverts local modifications to the file
+\item \code{git checkout --<filename>}, reverts local modifications to the file
 \end{itemize}
 
 Just a note, \code{git commit --amend} will change the whole GIT tree. So, 
