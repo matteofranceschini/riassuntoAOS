@@ -52,3 +52,22 @@ A detailed description is provided in Table \ref{Tab:Algorithms}.
 	\label{tab:multiprocessing}
 \end{table}
 
+\section{Content Switch}
+is a particular state of OS in which the current process in execution is stopped, the context (value of the program counter and of the register) is saved in PCB (process control bock) to allow to conitnue the execution on the future and is set the context of the new process selected from the ready queue by the scheduler.\\
+\textbf{When it occours:} \\
+\begin{itemize}
+		\item in multitasking execution
+		\item when an interrupt occours
+		\item switching from kernel mode to user mode (in some architectures the cost of this operation can be lower than the other two cases)
+\end{itemize}
+\textbf{hardware implementation:} \\
+a content switch can be implemented explicitly with a CALL or JMP instruction to the TSS (task state segment) in global descriptor table\\
+or implicitly by hardware support that when an interrupt occours automatically save the context in special shadow registers and execute the task according to the interrupt descriptor table.\\
+Sometime there can be some limitation to the hardware approach that depends from the archiecture, for example in some case the registers used by the task can be different from the general pourpose regiser of shadow reg and a software approach would be better.
+
+
+
+
+
+
+
