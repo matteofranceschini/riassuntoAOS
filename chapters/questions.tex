@@ -1,6 +1,5 @@
 \section{Describe the general characteristics of a scheduling for real-time, possibly including a comparison between Rate Monotonic and EDF. }
-
-\section{Describe the main algorithms for the scheduling of a single-core CPU, paying particular attention to the possible overhead, fairness and reactivity.}
+Duplicate? \ref{rmsedf}
 
 \section{ Detail the boot process of a microcontroller running a C++ bare metal application, from the reset vector to main(). What are the differences compared to a C program.  }
 
@@ -33,11 +32,13 @@ In the SECTIONS, one can map the three (or more) parts of the obj file, namely:
 	\item \code{.text}, that contains the instructions
 	\item \code{.data}, that contains the initialized data
 	\item \code{.bss}, (Block Started by Symbols) that contains the non-initialized and zero-initialized data
+    \item \code{.ctors}, C++ constructors list. It's a list of pointer of functions that the boot script should call before the main. (GCC manual says ``in reverse order'')
+    \item \code{.dtors}, C++ destructor list. It's a list of pointer of functions that someone should call after the main.
 \end{itemize}
 
 
 \section{Describe the Earliest Deadline First and Rate Monotonic Scheduling, making also a comparison to put in evidence limits and range of applicability.}
-
+\label{rmsedf}
 Both algorithms are good to schedule recurrent tasks.
 
 EDF is a scheduling algorithm that every time a new task gets to the ready queue, calculates which task it's closer to the deadline and gives it the priority, making it run until completion or if a closer-to-schedule task preempts it when it gets in the ready queue. 
