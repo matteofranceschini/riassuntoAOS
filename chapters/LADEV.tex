@@ -120,7 +120,120 @@ SECTIONS
 
 \end{lstlisting}
 
+\subsection{Keywords}
+The linker script has the following keywords:
+\begin{itemize}
+	\item \code{ENTRY(main)}, this is the symbol name for the entry point of the linked program/kernel. It can be "start" or "main" or whatever.It's the first byte of the program (of the first byre of the .txt section in ELF.)
+	\item \code{OUTPUT(kernel.bin)}, specifies the file that has to be output by the linker
+	\item \code{MEMORY}, declares one or more memory regions with attributes specifuing whether the region can be written to, read from or executed.
+	\item \code{ALIGN(4)} instructions tells the linker that this section ought to be word aligned. When you use a 32-bit machine it typically needs to be word aligned (32-bit -> 4 bytes hence the '4' specified with the align command. )
+	\item \code{AT} defines the location in FLASH for the RAM data at startup. \\ Can be both used as \code{data: AT(_last_text_address)\{\}} (at data section start) or as \code{\} > ram AT > rom} at the end of the data section.
+	\item \code{KEEP(*(.isr_vector))}, is useful to tell the linker to keep (don't erase) those sections that no one calls anywhere in the \code{*.s} file. It's almost the same thing as the \code{volatile} for C. Without this command, some parts may not work at all.
+\end{itemize}
 
+Here an example, well documented here:  \url{http://www.hertaville.com/a-sample-linker-script.html}.
+
+\begin{lstlisting}
+	/* Entry Point */
+	ENTRY(Reset_Handler)
+	
+	/* Specify the memory areas */
+	MEMORY
+	{
+	FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 0x10000 /*64K*/
+	RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 0x02000 /*8K*/
+	}
+	
+	/* define stack size and heap size here */
+	stack_size = 1024;
+	heap_size = 256;
+	
+	/* define beginning and ending of stack */
+	_stack_start = ORIGIN(RAM)+LENGTH(RAM);
+	_stack_end = _stack_start - stack_size;
+	
+	/* Define output sections */
+	SECTIONS
+	{
+	/* The startup code goes first into FLASH */
+	.isr_vector :
+	{
+	. = ALIGN(4);
+	KEEP(*(.isr_vector)) /* Startup code */
+	. = ALIGN(4);
+	} >FLASH
+	
+	/* The program code and other data goes into FLASH */
+	.text :
+	{
+	. = ALIGN(4);
+	*(.text)           /* .text sections (code) */
+	*(.text*)          /* .text* sections (code) */
+	*(.rodata)         /* .rodata sections (constants, strings, etc.) */
+	*(.rodata*)        /* .rodata* sections (constants, strings, etc.) */
+	*(.glue_7)         /* glue arm to thumb code */
+	*(.glue_7t)        /* glue thumb to arm code */
+	. = ALIGN(4);
+	_etext = .;        /* define a global symbols at end of code */
+	} >FLASH
+	
+	.ARM.extab   : { *(.ARM.extab* .gnu.linkonce.armextab.*) } >FLASH
+	.ARM : {
+	__exidx_start = .;
+	*(.ARM.exidx*)
+	__exidx_end = .;
+	} >FLASH
+	
+	/* used by the startup to initialize data */
+	_sidata = .;
+	
+	/* Initialized data sections goes into RAM, load LMA copy after code */
+	.data : AT ( _sidata )
+	{
+	. = ALIGN(4);
+	_sdata = .;        /* create a global symbol at data start */
+	*(.data)           /* .data sections */
+	*(.data*)          /* .data* sections */
+	
+	. = ALIGN(4);
+	_edata = .;        /* define a global symbol at data end */
+	} >RAM
+	
+	/* Uninitialized data section */
+	. = ALIGN(4);
+	.bss :
+	{
+	/*  Used by the startup in order to initialize the .bss secion */
+	_sbss = .;         /* define a global symbol at bss start */
+	__bss_start__ = _sbss;
+	*(.bss)
+	*(.bss*)
+	*(COMMON)
+	
+	. = ALIGN(4);
+	_ebss = .;         /* define a global symbol at bss end */
+	__bss_end__ = _ebss;
+	} >RAM
+	
+	. = ALIGN(4);
+	.heap :
+	{
+	_heap_start = .;
+	. = . + heap_size;
+	_heap_end = .;
+	} > RAM
+	
+	/* Remove information from the standard libraries */
+	/DISCARD/ :
+	{
+	libc.a ( * )
+	libm.a ( * )
+	libgcc.a ( * )
+	}
+	
+	.ARM.attributes 0 : { *(.ARM.attributes) }
+	}
+\end{lstlisting}
 %\begin{figure}[h]
 %	\centering
 %	\includegraphics[width=\textwidth/3]{gfx/linker_file}
