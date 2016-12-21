@@ -16,37 +16,34 @@ A comparison is provided in Table \ref{tab:thread_vs_process}.
 
 \begin{figure}[h]
 	\centering
-	\includegraphics[width=\textwidth/4]{gfx/process_threads}
+	\includegraphics[width=\textwidth]{gfx/process_threads}
 	
 	\caption{Threads in a process}
 	\label{Fig:process_threads}
 \end{figure}
+
+
+
+\pagebreak
 \section{Operations on processes}
 
 \subsection{fork()}
 This command creates a process by duplicating the calling process.
-\begin{lstlisting}
-#include <stdio.h>
+\begin{lstlisting}[language=C]
+pid_t child_pid; 
 
-#include <sys/types.h>
-
-#include <unistd.h>
-#include <unistd.h>
-
-int main () {
-}
-return 0; return 0;
-}
-pid_t child_pid; pid_t child_pid;
-printf("Main process id = %d (parent PID = %d)\n",
-printf("Main process id = %d (parent PID = %d)\n",
-(int) getpid(), (int) getppid()); (int) getpid(), (int) getppid());
 child_pid = fork();
-child_pid = fork();
-if (child_pid != 0) if (child_pid != 0)
+
+if (child_pid != 0)
+	printf("Parent: child's process id = %d\n", child_pid);
 else
-printf("Parent: child's process id = %d\n", child_pid); printf("Parent: child's process id = %d\n", child_pid);
-else
-printf("Child: my process id = %d\n", (int) getpid()); printf
+	printf("Child: my process id = %d\n", (int) getpid()); printf
 \end{lstlisting}
+
+When forking a process:
+\begin{itemize}
+	\item Parent process virtual address space is replicated in the child, Including the states of variables, mutexes, condition variables, POSIX objects.
+	\item The child inherits copies of the parent's set of open file descriptors, as well as status fags and current file offset.
+\end{itemize}
+
 \subsection{title}
