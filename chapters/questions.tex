@@ -57,6 +57,8 @@ These key factors, on which the schedulers are optimized, may be:
 	\item Fairness
 	\item Reactivity
 	\item Responsiveness
+	\item Turnaround time
+	\item Wait time
 	\item other...
 \end{itemize}
 
@@ -79,3 +81,24 @@ The main algorithms for scheduling, non real-time on a single-core CPU are:
 	\item Higher Response Ratio Next: it's like a shortest job first, but is weighted with the queue wait time; if a task is not short but it's waiting for a long time, it will access the CPU anyway. It's a fair algorithm and has some overhead. Reaction depends whether or not a fixed priority with preemption is implemented.
 \end{itemize}
 
+\section{Describe what is a context switch by specifying its purposes and detailing a generic and common implementation.}
+A context switch is an operation that occurs in case there's the need to stop the current working flow in a thread or process and switch to another working flow, that may be an interrupt service routine, another preemptive task or a switch between user and kernel mode (or vice-versa).
+
+During a context switch on a bare metal application, the registers to be saved are just those of the ALU, and the context save it's often handled by the compiler.
+
+In an Operating System, on the other hand, there are some other thread/process related registers that need to be saved and eventually restored, when the interrupted function goes back to run again: this permits every task to "think" that it's the only one running on the processor, while, in fact, it's one of the many.
+
+In a common implementation, the context switch has at least a \textit{save function} to save the context in the \textbf{Process Control Block} and a \textit{restore function} to restore the context for the next running application.
+
+For speed and reliability reasons, these functions are usually implemented in assembly language.
+
+
+\section{Detail the boot process of a microcontroller running a C++ bare metal application, from the reset vector to main(). What are the differences compared to a C program.}
+
+In a microcontroller running a C++ bare metal application the first thing, set by hardware, is the program counter location: it goes to its default value, depending on the architecture.
+
+The CPU starts at that address executing the first lines of code, that simply copy the non-zero-initialized variables to the RAM and call the classes constructors.
+
+Once this has been done, the microcontroller calls the main function.
+
+The difference between a C and a C++ is that the classes constructors won't be called.
