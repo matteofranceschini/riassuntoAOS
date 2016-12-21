@@ -14,7 +14,7 @@ A comparison is provided in Table \ref{tab:thread_vs_process}.
 	\label{tab:thread_vs_process}
 \end{table}
 
-\begin{figure}[h]
+\begin{figure}[]
 	\centering
 	\includegraphics[width=\textwidth]{gfx/process_threads}
 	
@@ -25,19 +25,25 @@ A comparison is provided in Table \ref{tab:thread_vs_process}.
 
 
 \pagebreak
+
 \section{Operations on processes}
 
 \subsection{fork()}
 This command creates a process by duplicating the calling process.
 \begin{lstlisting}[language=C]
-pid_t child_pid; 
+int main()
+{
+	pid_t child_pid; 
 
-child_pid = fork();
+	child_pid = fork();
 
-if (child_pid != 0)
-	printf("Parent: child's process id = %d\n", child_pid);
-else
-	printf("Child: my process id = %d\n", (int) getpid()); printf
+	if (child_pid != 0)
+		printf("Parent: child's process id = %d\n", child_pid);
+	else
+		printf("Child: my process id = %d\n", (int) getpid()); 
+		
+	return 0;
+}
 \end{lstlisting}
 
 When forking a process:
@@ -46,4 +52,31 @@ When forking a process:
 	\item The child inherits copies of the parent's set of open file descriptors, as well as status fags and current file offset.
 \end{itemize}
 
-\subsection{title}
+\subsection{wait()}
+The \code{wait(NULL)} waits for a child to end its execution, because the signal \code{NULL} is the one that tells "execution ended". 
+
+This program writes on the stout the child's sentence and then the father's sentence, because he waits for it.
+\begin{lstlisting}[language=C]
+int main()
+{
+	pid_t child_pid=0;
+	
+	child_pid= fork();
+	
+	wait(NULL);
+	
+	if(child_pid)
+		printf("\nFather's id: %d \n",getpid());
+	else
+		printf("\nChil's id: %d, with father: %d\n",getpid(),getppid());
+
+	return 0;
+}
+
+\end{lstlisting}
+
+\subsection{signal}
+Between processes one can use \code{signals}, that signal an event to a specific PID.
+To issue a \code{signal}, we need the function (or the command) \code{kill(pid_t pid,int signal);}.
+
+To listen to a signal we need a \code{struct sigaction}, in where we write the function to be called when the signal is issued, and a \code{sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)} in which we bind the signal issued by the \code{kill} to the function \code{*act}.
