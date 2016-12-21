@@ -76,7 +76,23 @@ CXX=g++	#the name of the compiler, it could be omitted if you call it CXX: its a
 CXXVARS= -Wall -std=c++11 -c #compilation variables: show warnings, compile with c++11 
 			     #and stop the compilation at the object creation (do not link the file)
 
+.PHONY = tidy #to tell the "make" that tidy is not a file 
+.PHONY = clean
+.PHONY = xx
+
 all:$(OUTPUT)  #if i call "make" without parameters i jump here
+
+
+tidy: #if someone calls "make tidy"
+	rm -f *.o #remove every object file
+
+clean: #if someone calls "make clean"
+	rm -f *.o #remove every object file
+	rm -f $(OUTPUT) #remove every output file
+
+xx: #if someone calls "make xx"
+	./$(OUTPUT) #execute the output file
+
 
 $(OUTPUT):$(OBJ) #meaning: please generate a $(OUTPUT) file name starting 
 		  #from the $(OBJ) object file and, if not present, execute the command
@@ -86,12 +102,6 @@ $(CXX) $^ -o $@   #g++ main.o -o main #the command to be executed
 		#If the object file is not present, execute the command
 $(CXX) $< $(CXXVARS) #the command is g++ whatever.cpp -Wall -std=c++11 -c
 
-clean: #if someone calls "make clean"
-rm -f *.o #remove every object file
-rm -f $(OUTPUT) #remove every output file
-
-diocane: #if someone calls "make diocane"
-./$(OUTPUT) #execute the output file
 
 
 \end{lstlisting}
@@ -133,15 +143,15 @@ The linker script has the following keywords:
 
 Here an example, well documented here:  \url{http://www.hertaville.com/a-sample-linker-script.html}.
 
-\begin{lstlisting}
+\begin{lstlisting}[basicstyle=\ttfamily \scriptsize]
 	/* Entry Point */
 	ENTRY(Reset_Handler)
 	
 	/* Specify the memory areas */
 	MEMORY
 	{
-	FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 0x10000 /*64K*/
-	RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 0x02000 /*8K*/
+		FLASH (rx)      : ORIGIN = 0x08000000, LENGTH = 0x10000 /*64K*/
+		RAM (xrw)       : ORIGIN = 0x20000000, LENGTH = 0x02000 /*8K*/
 	}
 	
 	/* define stack size and heap size here */
@@ -158,9 +168,9 @@ Here an example, well documented here:  \url{http://www.hertaville.com/a-sample-
 	/* The startup code goes first into FLASH */
 	.isr_vector :
 	{
-	. = ALIGN(4);
-	KEEP(*(.isr_vector)) /* Startup code */
-	. = ALIGN(4);
+		. = ALIGN(4); //this could be actually useless or dangerous
+		KEEP(*(.isr_vector)) /* Startup code */
+		. = ALIGN(4);
 	} >FLASH
 	
 	/* The program code and other data goes into FLASH */
@@ -188,7 +198,7 @@ Here an example, well documented here:  \url{http://www.hertaville.com/a-sample-
 	_sidata = .;
 	
 	/* Initialized data sections goes into RAM, load LMA copy after code */
-	.data : AT ( _sidata )
+	.data : AT ( _sidata ) //you can alss add the AT at the end
 	{
 	. = ALIGN(4);
 	_sdata = .;        /* create a global symbol at data start */
@@ -197,23 +207,25 @@ Here an example, well documented here:  \url{http://www.hertaville.com/a-sample-
 	
 	. = ALIGN(4);
 	_edata = .;        /* define a global symbol at data end */
-	} >RAM
-	
+	} >RAM			// or you could add here AT>rom to have the rom storage of the variables
+		
 	/* Uninitialized data section */
 	. = ALIGN(4);
+	_sbss = .;         /* define a global symbol at bss start :it's important to have it 
+	outside the .bss branches for C backward compatibility */
 	.bss :
 	{
 	/*  Used by the startup in order to initialize the .bss secion */
-	_sbss = .;         /* define a global symbol at bss start */
 	__bss_start__ = _sbss;
 	*(.bss)
 	*(.bss*)
 	*(COMMON)
 	
 	. = ALIGN(4);
-	_ebss = .;         /* define a global symbol at bss end */
+
 	__bss_end__ = _ebss;
 	} >RAM
+	_ebss = .;         /* define a global symbol at bss end */
 	
 	. = ALIGN(4);
 	.heap :
