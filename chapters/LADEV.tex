@@ -242,3 +242,12 @@ Here an example, well documented here:  \url{http://www.hertaville.com/a-sample-
 %	\label{Fig:Linker File}
 %\end{figure}
 
+\section{BOOT PROCESS}
+small portion of code written in assembler used for: 
+\begin{itemize}
+	\item 1. set the stack pointer to point at suitable memory region
+	\item 2. initialize the variable copyng them from flash to ram (ram coming out from a reset state is in random state)
+	\item 3. reset the value of bss variable (global and static variable)
+	\item 4. (optional) support for heap 
+	\item 5. (optional) support for standard C library
+	\end{itemize}
