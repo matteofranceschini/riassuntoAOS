@@ -75,8 +75,80 @@ int main()
 
 \end{lstlisting}
 
-\subsection{signal}
+\subsection{Signal}
 Between processes one can use \code{signals}, that signal an event to a specific PID.
 To issue a \code{signal}, we need the function (or the command) \code{kill(pid_t pid,int signal);}.
 
 To listen to a signal we need a \code{struct sigaction}, in where we write the function to be called when the signal is issued, and a \code{sigaction(int signum, const struct sigaction *act, struct sigaction *oldact)} in which we bind the signal issued by the \code{kill} to the function \code{*act}.
+
+
+\subsection{Pipe}
+The pipes can be:
+\begin{itemize}
+	\item unnamed: useful to exchange data between two forked processes
+	\item named: useful to exchange data between two uncorrelated processes. 
+\end{itemize}
+
+\subsubsection{Unnamed pipes}
+ Unnamed pipes use a shared variable in which a process adds data from one side and the other extracts it from the other side.
+
+\begin{lstlisting}[language=C]
+#include <stdlib.h>
+#include <stdio.h>
+#include <unistd.h>
+
+void writer(const char * message, int count, FILE * stream)
+{
+	for(; count > 0; --count)
+	{
+		fprintf(stream, "%s\n", message);
+		fflush(stream);
+		sleep(1);
+	}
+}
+
+
+void reader(FILE * stream)
+{
+	char buffer[1024];
+	while(!feof(stream) && !ferror(stream) && fgets(buffer,
+		sizeof(buffer), stream) != NULL)
+	fputs(buffer, stdout);
+}
+
+
+int main()
+{
+	FILE * stream;
+	int fds[2]; //the vector that stores the start and the end of the pipe
+	pipe(fds);
+	pid_t pid = fork();
+	/* Child process (consumer) */
+	if(pid == (pid_t) 0)
+	{
+		close(fds[1]);
+		/* Close the copy of the fds write end */
+		stream = fdopen(fds[0], "r");
+		reader(stream);
+		close(fds[0]);
+	}
+	else
+	{
+		close(fds[0]);
+		/* Close the copy of the fds read end */
+		stream = fdopen(fds[1], "w");
+		writer("Hello, world.", 3, stream);
+		close(fds[1]);
+	}
+	
+	return 0;
+
+}
+\end{lstlisting}
+
+\subsubsection{Named pipes}
+Use a file to exchange data.
+
+
+
+
