@@ -111,7 +111,7 @@ $(CXX) $< $(CXXVARS) #the command is g++ whatever.cpp -Wall -std=c++11 -c
 \section{Linker Script}
 The linker script is a file that defines where the various parts of the compiled code are actually stored in memory.
 
-The simplest possible linker script has just one command:\code[SECTIONS]. This command describes the memory layout of the building output file.
+The simplest possible linker script has just one command:\code{SECTIONS}. This command describes the memory layout of the building output file.
 
 Let's assume that the program consists only of code, initialized data and uninitialized data: these will be, respectively, stored in the \code{.text}, \code{.data} and \code{.bss} sections.
 

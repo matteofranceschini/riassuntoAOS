@@ -6,13 +6,13 @@ There are two types of RTOS:
 \end{itemize}
 
 \section{Features}
-The main features of an RTOS are:
+The main features of an RTOS are (Un Ricordo Rovinato Definitivamente):
 \begin{itemize}
-	\item \textbf{Determinism}: operation are performed at fixed and predetermined times \textbf{or} within predetermined time intervals. It defines how much time it takes to react, but \textbf{not} to complete the operation (i.e. how long does it take to handle and interrupt).
-	\item \textbf{Resposiveness}: how long, after acknowledgement, the operating system takes to \textbf{service} (complete) the task (i.e. the interrupt). It depends on ISR nesting.
+	\item \textbf{Determinism}: operation are performed at fixed and predetermined times \textbf{or} within predetermined time intervals. It defines how much time it takes to react, but \textbf{not} to complete the operation (i.e. how long does it take to handle and interrupt). 
+	\item \textbf{Resposiveness}: how long, after acknowledgement, the operating system takes to \textbf{service} (complete) the task (i.e. the interrupt). It depends on ISR nesting: if a context switch is necessary, the delay is longer than an ISR executed within the context of the current process.
 	\item \textbf{Reliability}: degradation of performances should not impact the system:	
 	\begin{itemize}
-		\item Fail soft: Ability to fail in such a way to preserve as much data
+		\item Soft fail: Ability to fail in such a way to preserve as much data
 		\item Stability: the system adopts policies such that the most critical high priority tasks execute first, even if some needs of less important tasks cannot be met.
 	\end{itemize}
 	\item \textbf{User control}: the user is active part of the system. He can specify task priority, choose the algorithms to use, etc.
@@ -22,6 +22,7 @@ The main features of an RTOS are:
 
 
 \section{Algorithms}
+\textbf{E}mpiricamente \textbf{R}icordo di \textbf{S}coreggiare - \textbf{D}ouble \textbf{P}enetration \textbf{B}ased.
 %\begin{itemize}
 %	\item \textbf{static-table driven}	
 %	
