@@ -39,14 +39,14 @@ In the SECTIONS, one can map the three (or more) parts of the obj file, namely:
 
 \section{Describe the Earliest Deadline First and Rate Monotonic Scheduling, making also a comparison to put in evidence limits and range of applicability.}
 \label{rmsedf}
-Both algorithms are good to schedule recurrent tasks.
+Both algorithms are good to schedule recurrent (periodic) tasks and can't work with aperiodic tasks.
 
-EDF is a scheduling algorithm that every time a new task gets to the ready queue, calculates which task it's closer to the deadline and gives it the priority, making it run until completion or if a closer-to-schedule task preempts it when it gets in the ready queue. 
+EDF uses a static table in which it has previously defined the list of tasks with the closest deadline, making them run until completion or if a closer-to-schedule task preempts the currently running one when it gets in the ready queue. 
 RM is, on the other hand, a scheduling algorithm that has fixed priorities for every task and the one that gets highest priority is the most recurrent one.
 
-EDF has more CPU time occupation than RM, but if it gets overloaded there's no way to know which tasks will get priority: this is the reason why this algorithm is unsuitable for industrial applications. Moreover, the calculation of the next closest deadline may take some time and overhead the system.
+EDF has more CPU time occupation than RM, but if it gets overloaded there's no way of knowing which tasks will get priority: this is the reason why this algorithm is unsuitable for industrial applications. Moreover, the calculation of the next closest deadline may take some time and is therefore more complex to plan than RM.
 
-RM hardly gets always a 100\% busy CPU, but if it gets overloaded, higher priority tasks will be the favourited, thereby reaching successfully completing before the deadline.
+RM hardly gets always a 100\% busy CPU even if there are a lot of tasks, but if it gets overloaded, higher priority tasks will be the favorite, therefore reaching successfully completion before the deadline.
 
 \section{Describe the main algorithms for the scheduling of a single-core CPU, paying particular attention to the possible overhead, fairness and reactivity.}
 
