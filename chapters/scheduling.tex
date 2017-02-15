@@ -1,16 +1,22 @@
 \section{Criteria}
-Algorithms can be optimized for different goals:
+Algorithms can be optimized for different goal (WTFCRT)
 \begin{itemize}
+\item \textbf{Waiting time}, amount of time a process has been waiting in the ready queue
+\item \textbf{Turnaround time}, amount of time to execute a particular process
+\item \textbf{Fairness}, defines if every process can, eventually, have its needed CPU time
 \item \textbf{CPU utilization}, keep CPU as busy as possible
-\item \textbf{throughput}, number of processes that complete their execution per time unit
-\item \textbf{turnaround time}, amount of time to execute a particular process
-\item \textbf{waiting time}, amount of time a process has been waiting in the ready queue
-\item \textbf{response time}, amount of time it takes from when a request was submitted until the first response is produce, not output
+\item \textbf{Response time}, amount of time it takes from when a request was submitted until the first response is produce, not output.
+\item \textbf{Throughput}, number of processes that complete their execution per time unit.
+
 
 \end{itemize}
 
 \section{Algorithms}
 A detailed description is provided in Table \ref{Tab:Algorithms}.
+
+SS Recall Hitler For First Feedback
+
+
 \begin{table}[]
 	\centering
 	\resizebox{\textwidth/8*7}{!}{%
@@ -42,9 +48,9 @@ A detailed description is provided in Table \ref{Tab:Algorithms}.
 \begin{table}[h]
 	\centering
 
-	\begin{tabular}{|m{\textwidth/15}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|}
+	\begin{tabular}{|m{\textwidth/10}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|m{\textwidth/6}|}
 		\hline
-		& \textbf{COMPLEXITY} & \textbf{OVERHEAD} & CPU UTILIZATION & ISSUES \\ \hline
+		& \textbf{COMPLEXITY} & \textbf{OVERHEAD} & \textbf{CPU UTILIZATION} & \textbf{ISSUES} \\ \hline
 		\textbf{MASTER/ SLAVE} & LOW, there is a master processor that manage the ready process queue and the common resources & LOW, static assignament of process there are few content switch & LOW, a low demanding task can lock a cpu & the master core is the bottle neck of the system\\ \hline
 		
 		\textbf{PEER} & HIGH, every processor has its own scheduler that have to race for common resources & HIGH, the same process can start in a processor and then jump to another & HIGH &high complexity in shared resources management \\ \hline
