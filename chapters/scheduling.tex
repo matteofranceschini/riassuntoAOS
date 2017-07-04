@@ -44,6 +44,18 @@ SS Recall Hitler For First Feedback
 	\item{\textbf{multilevel feedback queue}}, process starts in the first queue but if do not complete after the first execution scheduler in the next queue
 \end{itemize}
 
+\section{Exectution Time Extimation}
+	Some scheduling algorithms (SJB, SRTN, HRRN) needs to know their execution time to be implemented.
+	A possibile extimation is done with this formula:
+	\begin{equation}
+		tau_{n+1} = \alpha t_n + (1 - \alpha) \tau_n
+	\end{equation}
+	with:\\
+	$\alpha (0 < \alpha < 1): $ weight coefficient\\
+	$t_n:$ current execution time\\
+	$\tau_n:$ extimation of the current execution time\\
+	$\tau_{n+1}:$ extimation of the next execution time
+
 \section{Multiprocessor Scheduling}
 \begin{table}[h]
 	\centering
